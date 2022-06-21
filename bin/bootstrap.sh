@@ -4,8 +4,7 @@ set -euxo pipefail
 DIR=$(cd "$(dirname "$0")";cd ..; pwd)
 IMAGE="opensuse/tumbleweed"
 
-nix build $DIR
-cp $DIR/result/*/* --no-preserve=mode,ownership $DIR/results
+$DIR/bin/build.sh
 
 sudo docker run \
     --mount type=bind,source=/mnt,target=/mnt \
