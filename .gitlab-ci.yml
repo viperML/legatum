@@ -5,6 +5,7 @@ build:
   image: nixos/nix
   stage: build
   script:
+    - tee -a /etc/nix/nix.conf <<EOF extra-experimental-features = nix-command flakes EOF
     - nix build
   artifacts:
     paths:
