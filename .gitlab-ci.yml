@@ -2,6 +2,7 @@ stages:
   - build
 
 build:
+  image: nixos/nix
   stage: build
   script:
     - nix build
