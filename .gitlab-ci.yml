@@ -1,0 +1,11 @@
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - nix build
+  artifacts:
+    paths:
+      - result/*/*
+    expire_in: 1 day

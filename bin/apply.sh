@@ -8,6 +8,5 @@ zy="zypper --non-interactive --root $M"
 
 zypper -n refresh
 zypper --installroot $M -n install -t pattern enhanced_base
-zypper --installroot $m -n install $M/src/results/stage1-*
+zypper --installroot $M -n install $M/src/results/stage1-*
 $zy --gpg-auto-import-keys refresh
-

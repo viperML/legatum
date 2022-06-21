@@ -8,5 +8,5 @@ docker run \
     --tty \
     --mount type=bind,source=/mnt,target=/mnt \
     --mount type=bind,source=$DIR,target=/mnt/src \
-    "opensuse-fat" \
+    "opensuse/tumbleweed" \
     /bin/bash
