@@ -1,12 +1,46 @@
 #!/usr/bin/env bash
-set -uxo pipefail
+set -euxo pipefail
 
-DIR=$(cd "$(dirname "$0")";cd ..; pwd)
-M=$1
+DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
+MOUNTPOINT="${1:-"/mnt"}"
 
-zy="zypper --non-interactive --root $M"
+VERSION_ID=36
 
-zypper -n refresh
-zypper --installroot $M -n install -t pattern enhanced_base
-zypper --installroot $M -n install $M/src/results/stage1-*
-$zy --gpg-auto-import-keys refresh
+ins_cmd () {
+    if [ -f $MOUNTPOINT/etc/.$1 ]; then
+        echo "reinstall"
+    else
+        echo "install"
+    fi
+}
+
+cp -v $MOUNTPOINT/src/stage1/etc/pki/rpm-gpg/* /etc/pki/rpm-gpg/
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    install \
+    @core
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    $(ins_cmd stage1) \
+    $MOUNTPOINT/src/rpms/stage1-*.rpm
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    update \
+    --refresh
+
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    $(ins_cmd stage2) \
+    $MOUNTPOINT/src/rpms/stage2-*.rpm

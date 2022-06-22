@@ -1,1 +1,0 @@
-LUKSROOT /dev/disk/by-uuid/41aec3cc-34dd-4745-ae5a-1df1b60c998d none luks,discard,initramfs

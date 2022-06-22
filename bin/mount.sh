@@ -5,7 +5,7 @@ m=/mnt
 
 grep /mnt /etc/mtab && umount -R /mnt
 
-mount -t zfs -o zfsutil tank/suse/rootfs $m
+mount -t zfs -o zfsutil tank/fedora/rootfs $m
 
-mkdir -p $m/boot/efi
-mount /dev/disk/by-label/LINUXESP $m/boot/efi
+mkdir -p $m/efi
+mount /dev/disk/by-label/LINUXESP $m/efi
