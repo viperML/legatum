@@ -12,6 +12,11 @@
         stage1 = callPackage (builder {
           pname = "stage1";
           version = __substring 0 8 self.lastModifiedDate;
+          deps = [
+            "fedora-gpg-keys"
+            "fedora-repos"
+            "fedora-repos-modular"
+          ];
         }) {};
         stage2 = callPackage (builder {
           pname = "stage2";

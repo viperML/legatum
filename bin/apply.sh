@@ -16,21 +16,12 @@ ins_cmd () {
 
 cp -v $MOUNTPOINT/src/stage1/etc/pki/rpm-gpg/* /etc/pki/rpm-gpg/
 
-# dnf \
-#     --installroot=$MOUNTPOINT \
-#     --releasever $VERSION_ID \
-#     --assumeyes \
-#     $(ins_cmd stage1) \
-#     $MOUNTPOINT/src/pkgs/stage1-*.rpm
-
 dnf \
     --installroot=$MOUNTPOINT \
     --releasever $VERSION_ID \
     --assumeyes \
-    install \
-    @core
-
-exit 1
+    $(ins_cmd stage1) \
+    $MOUNTPOINT/src/pkgs/stage1-*.rpm
 
 dnf \
     --installroot=$MOUNTPOINT \
@@ -39,6 +30,12 @@ dnf \
     update \
     --refresh
 
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    install \
+    @core
 
 dnf \
     --installroot=$MOUNTPOINT \
@@ -52,3 +49,10 @@ dnf \
     --releasever $VERSION_ID \
     --assumeyes \
     autoremove
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    install \
+    @kde-desktop-environment
