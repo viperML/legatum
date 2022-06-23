@@ -16,6 +16,13 @@ ins_cmd () {
 
 cp -v $MOUNTPOINT/src/stage1/etc/pki/rpm-gpg/* /etc/pki/rpm-gpg/
 
+# dnf \
+#     --installroot=$MOUNTPOINT \
+#     --releasever $VERSION_ID \
+#     --assumeyes \
+#     $(ins_cmd stage1) \
+#     $MOUNTPOINT/src/pkgs/stage1-*.rpm
+
 dnf \
     --installroot=$MOUNTPOINT \
     --releasever $VERSION_ID \
@@ -23,12 +30,7 @@ dnf \
     install \
     @core
 
-dnf \
-    --installroot=$MOUNTPOINT \
-    --releasever $VERSION_ID \
-    --assumeyes \
-    $(ins_cmd stage1) \
-    $MOUNTPOINT/src/pkgs/stage1-*.rpm
+exit 1
 
 dnf \
     --installroot=$MOUNTPOINT \
@@ -44,3 +46,9 @@ dnf \
     --assumeyes \
     $(ins_cmd stage2) \
     $MOUNTPOINT/src/pkgs/stage2-*.rpm
+
+dnf \
+    --installroot=$MOUNTPOINT \
+    --releasever $VERSION_ID \
+    --assumeyes \
+    autoremove
