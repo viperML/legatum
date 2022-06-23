@@ -17,14 +17,14 @@
           pname = "stage2";
           version = __substring 0 8 self.lastModifiedDate;
           deps = [
+            "kernel-longterm"
+            "kernel-longterm-devel"
+            #
             "dracut"
             "lvm2"
             "cryptsetup"
             "zfs"
             "zfs-dracut"
-            #
-            "kernel-longterm"
-            "kernel-longterm-devel"
           ];
         }) {};
         default = linkFarm "stages" (map (name: {

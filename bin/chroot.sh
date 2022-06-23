@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
-MOUNTPOINT="${1:-"/mnt"}"
-SRC="$MOUNTPOINT/src"
+export DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
+export MOUNTPOINT="/mnt"
+export SRC="$MOUNTPOINT/src"
 
 
 docker run \
@@ -14,4 +14,4 @@ docker run \
     --mount type=bind,source=$DIR,target=$SRC \
     --cap-add=SYS_ADMIN \
     "fedora" \
-    /usr/bin/env bash -c "rpm -Uvh $SRC/rpms/bubblewrap-*.rpm; bwrap --dev-bind $MOUNTPOINT / --dev /dev --proc /proc --tmpfs /tmp --ro-bind /etc/resolv.conf /etc/resolv.conf /usr/bin/env bash"
+    /usr/bin/env bash -c "rpm -Uvh $SRC/pkgs/bubblewrap-*.rpm; bwrap --dev-bind $MOUNTPOINT / --dev /dev --proc /proc --tmpfs /tmp --ro-bind /etc/resolv.conf /etc/resolv.conf /usr/bin/env bash"

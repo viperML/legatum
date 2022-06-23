@@ -28,7 +28,7 @@ dnf \
     --releasever $VERSION_ID \
     --assumeyes \
     $(ins_cmd stage1) \
-    $MOUNTPOINT/src/rpms/stage1-*.rpm
+    $MOUNTPOINT/src/pkgs/stage1-*.rpm
 
 dnf \
     --installroot=$MOUNTPOINT \
@@ -43,4 +43,4 @@ dnf \
     --releasever $VERSION_ID \
     --assumeyes \
     $(ins_cmd stage2) \
-    $MOUNTPOINT/src/rpms/stage2-*.rpm
+    $MOUNTPOINT/src/pkgs/stage2-*.rpm
