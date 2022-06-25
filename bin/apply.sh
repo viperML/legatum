@@ -30,12 +30,6 @@ dnf \
     update \
     --refresh
 
-dnf \
-    --installroot=$MOUNTPOINT \
-    --releasever $VERSION_ID \
-    --assumeyes \
-    install \
-    @core
 
 dnf \
     --installroot=$MOUNTPOINT \
@@ -49,10 +43,3 @@ dnf \
     --releasever $VERSION_ID \
     --assumeyes \
     autoremove
-
-dnf \
-    --installroot=$MOUNTPOINT \
-    --releasever $VERSION_ID \
-    --assumeyes \
-    install \
-    @kde-desktop-environment

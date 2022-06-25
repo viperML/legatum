@@ -5,6 +5,7 @@ export DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
 export MOUNTPOINT="/mnt"
 export SRC="$MOUNTPOINT/src"
 
+rm $MOUNTPOINT/etc/resolv.conf
 
 docker run \
     --interactive \
@@ -14,4 +15,4 @@ docker run \
     --mount type=bind,source=$DIR,target=$SRC \
     --cap-add=SYS_ADMIN \
     "fedora" \
-    /usr/bin/env bash -c "rpm -Uvh $SRC/pkgs/bubblewrap-*.rpm; bwrap --dev-bind $MOUNTPOINT / --dev /dev --proc /proc --tmpfs /tmp --ro-bind /etc/resolv.conf /etc/resolv.conf /usr/bin/env bash"
+    /usr/bin/env bash -c "rpm -Uvh $SRC/pkgs/bubblewrap-*.rpm; bwrap --dev-bind $MOUNTPOINT / --dev /dev --proc /proc --tmpfs /tmp --ro-bind /etc/resolv.conf /etc/resolv.conf --tmpfs /run /usr/bin/env bash"

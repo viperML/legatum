@@ -22,6 +22,7 @@
           pname = "stage2";
           version = __substring 0 8 self.lastModifiedDate;
           deps = [
+            ./groups/core.nix
             "kernel-longterm"
             "kernel-longterm-devel"
             #
