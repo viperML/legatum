@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 set -euxo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)"
 
-DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
-MOUNTPOINT="${1:-"/mnt"}"
+base=bigz/fedora
 
-set +e
-grep $MOUNTPOINT /etc/mtab
-was_mounted=$?
-set -e
-
-if [ $was_mounted -eq 0 ]; then
-    umount -R $MOUNTPOINT
+if grep /mnt /proc/mounts; then
+    umount -R /mnt
+    was_mounted=1
+else
+    was_mounted=0
 fi
 
-zfs rollback tank/fedora/rootfs@empty
+zfs rollback $base/usr@empty
+zfs rollback $base/etc@empty
+zfs rollback $base/opt@empty
+zfs rollback $base/var@empty
+zfs rollback $base/boot@empty
 
-if [ $was_mounted -eq 0 ]; then
-    $DIR/bin/mount.sh
+if [[ $was_mounted -eq 1 ]]; then
+    exec "$DIR/mount.sh"
 fi
